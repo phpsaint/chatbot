@@ -1,0 +1,46 @@
+.chat-bot-container {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  height: 500px;
+  border-radius: 10px;
+  width: 300px;
+  background: red;
+}
+
+.chat-bot-container .cb-header {
+  padding: 10px 5px;
+  border-radius: 10px 10px 0px 0px;
+}
+
+.chat-bot-container .cb-header h1 {
+  font-size: 15px;
+  margin: 0px;
+  padding: 0px;
+  color: #fff;
+}
+
+.chat-bot-container .cb-header .cb-header-actions {
+  list-style: none;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  margin: 0px;
+  padding: 0px;
+}
+
+.chat-bot-container .cb-header .cb-header-actions li a {
+  font-size: 12px;
+  color: #fff;
+}
+
+.chat-bot-container .cb-body {
+  background: #ffff;
+  height: 400px;
+  margin: 2px;
+}
+
+.chat-bot-container .cb-body .cb-message-list {
+  list-style: none;
+}
+/*# sourceMappingURL=bot.css.map */

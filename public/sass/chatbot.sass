@@ -1,0 +1,162 @@
+@import 'lib/normalize'
+
+// Variables
+$primary-font-familiy: Open Sans, sans-serif
+
+$bot-width: 400px
+$bot-height: 600px;
+$bot-border-radius: 5px
+$bot-position-right: 10px;
+$bot-position-bottom: 10px;
+
+$bot-container-margin: 2px
+$bot-container-padding: 10px
+$bot-container-background: #035AA6
+
+$bot-body-background: #ffffff
+$bot-body-height: 480px
+
+$bot-avar-max-size : 48px
+$bot-messgage-you-background : #ACD1F2
+$bot-messgage-me-background : #8AD1F2
+$bot-messgage-date-color: #F2C6A0
+
+// Mixings
+
+
+
+/* Features */
+
+/* Bot */
+
+
+.chat-bot-container
+    font-family : $primary-font-familiy
+    position: fixed
+    bottom: $bot-position-bottom
+    right: $bot-position-right
+    height: $bot-height
+    border-radius: $bot-border-radius
+    width: $bot-width
+    background: $bot-container-background    
+
+
+
+    .cb-header
+        padding: 10px 5px
+        border-radius: 10px 10px 0px 0px
+        cursor: pointer
+
+        h1
+            font-size: 15px
+            margin: 0px
+            padding: 0px
+            color: #fff
+            font-weight: normal
+        
+        .cb-header-actions
+            list-style: none
+            position: absolute
+            right: 10px
+            top: 10px
+            margin: 0px
+            padding: 0px
+
+            li
+                a, i
+                    font-size: 12px
+                    color: #fff
+
+    .cb-body
+        background: $bot-body-background
+        margin: $bot-container-margin
+        height: $bot-body-height
+        overflow-y: auto
+        padding: $bot-container-padding
+
+        .cb-message-list
+            list-style: none
+            margin: 0px
+            padding: 0px
+
+            li.cb-message
+                margin-bottom: 20px
+                padding: 5px 
+                position: relative
+               
+                
+                .cb-avatar
+                    position: absolute
+                    top: 10px
+                    
+                    img
+                        width: $bot-avar-max-size 
+                        height: auto
+                        
+                .cb-message-data
+                    font-size: 12px
+                    background: $bot-messgage-you-background
+                    padding: 10px
+                    border-radius: 5px
+                    border: 1px solid  $bot-body-background 
+
+                    &:hover
+                        border: 1px solid  $bot-container-background 
+                
+                .cb-message-date
+                    font-size: 10px
+                    font-style: italic
+                    text-align: right
+                    color: $bot-messgage-date-color
+
+                &.you
+                    padding-left: 60px
+                    
+                    .cb-avatar
+                        left: 10px
+
+                &.me
+                    padding-right: 60px
+
+                    .cb-avatar
+                        right: 10px
+                    
+                    .cb-message-data
+                        background: $bot-messgage-me-background
+                &.plus
+                    margin-top: -15px
+
+
+    .cb-footer
+        padding: 10px
+        position: relative
+
+        textarea
+            width: 100%
+            height: 32px
+            font-size: 12px
+            border: none
+
+
+        .send-message
+            position: absolute
+            right: 10px
+            top: 10px
+            background: url('../img/icons/icon_sent.png')
+            display: block
+            width: 32px
+            height: 32px
+            text-indent: -99999px
+            cursor: pointer
+
+
+.collapsed 
+	overflow-y: hidden
+	height: 40px
+	transition-property: all
+	transition-duration: .5s
+	transition-timing-function: cubic-bezier(0, 1, 0.5, 1)
+
+
+
+
