@@ -1,5 +1,5 @@
-# chatbot
-Chat bot UI Implementation with ractive and vue Js
+# Chatbot
+Chat bot UI Implementation with ractive and vue Js with Websocket implementation
 
 ## Pending Tasks
 - Webapack implemenation
@@ -9,3 +9,6 @@ Chat bot UI Implementation with ractive and vue Js
 ## Functional pending
 - Topics
 - Image topics
+
+
+
