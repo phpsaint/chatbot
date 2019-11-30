@@ -62,11 +62,11 @@ wss.on('connection', function connection(ws) {
     setTimeout(function(){
 
       var returnMessage = {message : 'Re:' + useMessage.message};
-
-      if(message.indexOf('IMAGE')){
+       
+      if(message.indexOf('IMAGE') > -1){
         returnMessage =  responseList.IMAGE;
       }
-      if(message.indexOf('OPTION')){
+      if(message.indexOf('OPTION') > -1){
         returnMessage =  responseList.OPTION;
       }
 
