@@ -32,7 +32,8 @@ var responseList = {
   },
   OPTION: {
     type: 'OPTION',
-    messages: [
+    message: 'Please choose from our choices',
+    options: [
       {
         title: 'OPTION 1',
         description: 'Nulla a dignissim lectus. Nam id tellus vel tortor ornare venenatis.'
@@ -63,10 +64,11 @@ wss.on('connection', function connection(ws) {
 
       var returnMessage = { message: 'Re:' + useMessage.message };
 
-      if (message.indexOf('IMAGE')) {
+      if (message.indexOf('IMAGE') > -1) {
         returnMessage = responseList.IMAGE;
       }
-      if (message.indexOf('OPTION')) {
+
+      if (message.indexOf('OPTION') > -1) {
         returnMessage = responseList.OPTION;
       }
 

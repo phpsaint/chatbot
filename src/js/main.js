@@ -1,10 +1,9 @@
 import Vue from 'vue';
 import '../sass/chatbot.sass';
 
-import getBotConfig from './config/config.js';
+import { getBotConfig } from './config/config.js';
 
-
-var widgetMetaData =getBotConfig();
+var widgetMetaData = getBotConfig();
 
 
 /*----------------------- Message Client -----------------------------*/
@@ -68,49 +67,49 @@ var messageList = [
         isFromServer: true,
         avatarUrl: 'img/avatar/avatar1.png',
         message: 'Sed augue lacus viverra vitae congue eu consequat ac felis. Aliquam vestibulum morbi blandit curs',
-        postedOn: '06/15/2018 12:30PM'
+        postedOn: '12:30PM'
     },
     {
         isFromServer: true,
         avatarUrl: 'img/avatar/avatar1.png',
         message: 'Sed augue lacus viverra vitae congue eu consequat ac felis. Aliquam vestibulum morbi blandit curs',
-        postedOn: '06/15/2018 12:30PM'
+        postedOn: '12:30PM'
     },
     {
         isFromServer: false,
         avatarUrl: 'img/avatar/avatar1.png',
         message: 'Sed augue lacus viverra vitae congue eu consequat ac felis. Aliquam vestibulum morbi blandit curs',
-        postedOn: '06/15/2018 12:30PM'
+        postedOn: '12:30PM'
     },
     {
         isFromServer: true,
         avatarUrl: 'img/avatar/avatar1.png',
         message: 'Sed augue lacus viverra vitae congue eu consequat ac felis. Aliquam vestibulum morbi blandit curs',
-        postedOn: '06/15/2018 12:30PM'
+        postedOn: '12:30PM'
     },
     {
         isFromServer: true,
         avatarUrl: 'img/avatar/avatar1.png',
         message: 'Sed augue lacus viverra vitae congue eu consequat ac felis. Aliquam vestibulum morbi blandit curs',
-        postedOn: '06/15/2018 12:30PM'
+        postedOn: '12:30PM'
     },
     {
         isFromServer: false,
         avatarUrl: 'img/avatar/avatar1.png',
         message: 'Sed augue lacus viverra vitae congue eu consequat ac felis. Aliquam vestibulum morbi blandit curs',
-        postedOn: '06/15/2018 12:30PM'
+        postedOn: '12:30PM'
     },
     {
         isFromServer: false,
         avatarUrl: 'img/avatar/avatar1.png',
         message: 'Sed augue lacus viverra vitae congue eu consequat ac felis. Aliquam vestibulum morbi blandit curs',
-        postedOn: '06/15/2018 12:30PM'
+        postedOn: '12:30PM'
     },
     {
         isFromServer: false,
         avatarUrl: 'img/avatar/avatar1.png',
         message: 'Sed augue lacus viverra vitae congue eu consequat ac felis. Aliquam vestibulum morbi blandit curs',
-        postedOn: '06/15/2018 12:30PM'
+        postedOn: '12:30PM'
     }
 ];
 
@@ -120,14 +119,31 @@ $(document).ready(function () {
         return messages.length && messages[messages.length - 1].isFromServer === currenteMessage.isFromServer;
     }
 
+    function getTimeFormatted(){
+        var dateObj = new Date();
+
+        var hours = dateObj.getHours();
+        var minutes = dateObj.getMinutes();
+
+        var ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        minutes = minutes < 10 ? '0'+minutes : minutes;
+        var strTime = hours + ':' + minutes + ' ' + ampm;
+
+        return strTime;
+    }
+
     function addMessage(message, isMyMessage) {
         var messages = chatBotView.messages;
 
         var currentMessage = {
             message: message.message,
+            type: message.type,
+            options: message.options,
             avatarUrl: 'img/avatar/avatar1.png',
             isFromServer: !isMyMessage,
-            postedOn: 'DATE'
+            postedOn: getTimeFormatted()
         };
 
         currentMessage.isPlusMessage = isPlusMessage(messages, currentMessage);
@@ -155,11 +171,16 @@ $(document).ready(function () {
 
     Vue.component('chat-bot', {
         props: ['metaData', 'messages', 'userMessage'],
+        methods: {
+            postMessage: function postMessage(message) {
+                this.$emit('post-message', message);
+            }
+        },
         template: `
             <div class="chat-bot-container">
                 <cb-bot-header v-bind:header-info="metaData"></cb-bot-header>
-                <cb-bot-message-list v-bind:messages="messages"></cb-bot-message-list>
-                <cb-bot-footer v-bind:user-message="userMessage"></cb-bot-footer>
+                <cb-bot-message-list v-bind:messages="messages" v-on:post-message = "postMessage"></cb-bot-message-list>
+                <cb-bot-footer v-bind:user-message="userMessage" v-on:post-message = "postMessage"></cb-bot-footer>
             </div>
         `
     });
@@ -181,15 +202,53 @@ $(document).ready(function () {
         `
     });
 
+    Vue.component('cb-bot-footer', {
+        props: ['userMessage'],
+        methods: {
+            emitMessage: function emitMessage() {
+                this.$emit('post-message', this.customerMessage)
+                this.customerMessage = '';
+            }
+        },
+        data: function () {
+            return {
+                customerMessage: ''
+            }
+        },
+        template: `
+            <div class="cb-footer">
+                <form action="javascript:void(0)" class="cb-message-form-box">
+                    <input 
+                        type = "text" 
+                        class = "message-box" 
+                        placeholder="Please write your message here" 
+                        v-model="customerMessage"
+                        v-on:keyup.enter = "emitMessage"
+                        />
+                </form>
+            </div>
+        `
+    });
+
 
     Vue.component('cb-bot-message-list', {
         props: ['messages'],
+        methods: {
+            postMessage: function postMessage(message) {
+                this.$emit('post-message', message)
+            }
+        },
         template: `
             <div class="cb-body">
                 <ul class="cb-message-list">
 
                 <li v-for="message in messages" class="cb-message" :class="{ you: message.isFromServer, me: !message.isFromServer }">
-                    <cb-default-message  v-bind:message="message"></cb-default-message>
+                    <div v-if="message.type === 'OPTION'" >
+                        <cb-message-options-list v-bind:message="message" v-on:post-message = "postMessage"></cb-message-options-list>
+                    </div>
+                    <div v-else >
+                        <cb-message-default v-bind:message="message"></cb-message-default>
+                    </div>
                 </li>
 
                 </ul>
@@ -197,19 +256,8 @@ $(document).ready(function () {
         `
     });
 
-    Vue.component('cb-bot-footer', {
-        props: ['userMessage'],
-        template: `
-            <div class="cb-footer">
-                <form action="" class="cb-message-form-box">
-                    <textarea placeholder="Please write your message here" :value="userMessage"></textarea>
-                </form>
-            </div>
-        `
-    });
 
-
-    Vue.component('cb-default-message', {
+    Vue.component('cb-message-default', {
         props: ['message'],
         template: `
             <div class="cb-default-message">
@@ -228,6 +276,42 @@ $(document).ready(function () {
         `
     });
 
+    Vue.component('cb-message-options-list', {
+        props: ['message'],
+        methods: {
+            chooseMessage: function chooseMessage(message) {
+                this.$emit('post-message', message.title)
+            }
+        },
+        template: `
+            <div class="cb-default-message">
+                <div class="cb-avatar">
+                    <img v-bind:src="message.avatarUrl" alt="">
+                </div>
+
+                <div class="cb-message-data">
+                    <p class="message-question">
+                        {{message.message}}
+                    </p>
+                    <ul  class="cb-message-options" >
+                        <li v-for="option in message.options"  v-on:click = "chooseMessage(option)">
+                            <h3 class="message-heading">
+                                {{option.title}}
+                            </h3>
+                            <p class="message-description" v-if="option.description1">
+                                {{option.description}}
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="cb-message-date">
+                    {{message.postedOn}}
+                </div>
+            </div>
+        `
+    });
+
     chatBotView = new Vue({
         el: '#chatBotPlaceHolder',
         template: `        
@@ -235,7 +319,8 @@ $(document).ready(function () {
                 <chat-bot 
                     v-bind:meta-data="metaData"
                     v-bind:messages="messages" 
-                    v-bind:user-message="userMessage">
+                    v-bind:user-message="userMessage"
+                    v-on:post-message="postMessage">
                 </chat-bot>
             </div>
         `,
@@ -246,7 +331,7 @@ $(document).ready(function () {
             messages: messageList,
             userInfo: {},
             metaData: widgetMetaData,
-            userMessage: ''
+            userMessage: 'Test Message'
         },
 
         methods: {
@@ -254,8 +339,7 @@ $(document).ready(function () {
                 return index && messages[index - 1].isFromServer === messages[index].isFromServer;
             },
 
-            postMessage: function () {
-                var userMessage = this.userMessage;
+            postMessage: function (userMessage) {
 
                 if (userMessage.trim()) {
 

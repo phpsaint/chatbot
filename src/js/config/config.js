@@ -3,7 +3,7 @@ var widgetMetaData = {
     botHeaderName: 'StarBucks'
 };
 
-export  function getBotConfig(){
+export function getBotConfig(){
 
     return widgetMetaData;
 }
