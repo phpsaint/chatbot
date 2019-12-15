@@ -101,7 +101,35 @@ $bot-messgage-date-color: #F2C6A0
                     border: 1px solid  $bot-body-background 
 
                     &:hover
-                        border: 1px solid  $bot-container-background 
+                        border: 1px solid  $bot-container-background
+
+                p.message-question
+                    margin: 2px
+                
+                ul.cb-message-options
+                    padding: 0px
+
+                    li
+                        list-style: none
+                        border: 1px solid #ccc
+                        background: #fff
+                        border-radius: 5px
+                        padding: 5px
+                        margin-bottom: 10px
+
+                        &:hover
+                            border: 1px solid #035AA6;
+
+                        h3
+                            padding: 0px
+                            margin: 0px
+                            font-size: 12px
+                            
+                        .message-description
+                            margin: 0px
+                            font-style: italic
+                            color: #000
+                            font-size: 10px                
                 
                 .cb-message-date
                     font-size: 10px
@@ -131,22 +159,22 @@ $bot-messgage-date-color: #F2C6A0
         padding: 10px
         position: relative
 
-        textarea
-            width: 100%
-            height: 32px
-            font-size: 12px
-            border: none
+        .cb-message-form-box 
+            .message-box
+                width: 100%
+                font-size: 12px
+                line-height: 30px
+                border: none
 
-
-        .send-message
-            position: absolute
-            right: 10px
-            top: 10px
-            display: block
-            width: 32px
-            height: 32px
-            text-indent: -99999px
-            cursor: pointer
+            .send-message
+                position: absolute
+                right: 10px
+                top: 10px
+                display: block
+                width: 32px
+                height: 32px
+                text-indent: -99999px
+                cursor: pointer
 
 
 .collapsed 
