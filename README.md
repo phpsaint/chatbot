@@ -9,22 +9,23 @@ Bot will communicate and update chat window based on web socket response in real
 - Webpack
 - Websocket
 
-## Pending Tasks
-- Webapack implemenation - Partially DOne
-- Code cleanup and seperation
-- View and Ractive independent Repo
+## Message types
+- Text Message
+- options/topics
 
-## Functional Tajs Pending
-- Topics
+## Pending Tasks
+- Webapack implemenation - Partially Done
+- Code cleanup and seperation - In Progress
+
+## Functional Tasks Pending
 - Image topics
+- Video Topics
 
 ## Getting Started
 
 ```
 npm install
-
 npm build
-
 node server
 
 ```
